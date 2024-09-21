@@ -16,7 +16,7 @@ const Register = () => {
   const videoRef = useRef(null); 
   useEffect(() => {
     if(localStorage.getItem('user')){
-      navigate('/');
+      navigate('/home');
     }
   }, [navigate]);
 
@@ -60,7 +60,7 @@ const Register = () => {
         localStorage.setItem("user", JSON.stringify(data.user));
         toast.success(data.message, toastOptions);
         setLoading(true);
-        navigate("/");
+        navigate("/home");
       }
       else{
         toast.error(data.message, toastOptions);

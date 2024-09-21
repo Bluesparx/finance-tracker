@@ -16,7 +16,7 @@ const Login = () => {
 
   useEffect(() => {
     if (localStorage.getItem("user")) {
-      navigate("/");
+      navigate("/home");
     }
   }, [navigate]);
 
@@ -52,7 +52,7 @@ const Login = () => {
 
     if (data.success === true) {
       localStorage.setItem("user", JSON.stringify(data.user));
-      navigate("/");
+      navigate("/home");
       toast.success(data.message, toastOptions);
       setLoading(false);
     } else {
@@ -143,7 +143,7 @@ const Login = () => {
 
                 <p className="mt-3" style={{ color: "#9d9494" }}>
                   Don't Have an Account?{" "}
-                  <Link to="/register" className="text-white lnk">
+                  <Link to="/" className="text-white lnk">
                     Register
                   </Link>
                 </p>

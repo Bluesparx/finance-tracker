@@ -1,6 +1,6 @@
 import React from 'react';
 import "./App.css";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from './Pages/Auth/Login';
 import Register from './Pages/Auth/Register';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -11,9 +11,9 @@ const App = () => {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Navigate to="/register" replace />} />
+          <Route path="/home" element={<Home/>}/>
           <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          <Route path="/" element={<Register />} />
         </Routes>
       </BrowserRouter>
     </div>
