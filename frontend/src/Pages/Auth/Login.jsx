@@ -1,17 +1,17 @@
-// LoginPage.js
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState, useRef} from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
-import { loadFull } from "tsparticles";
-import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { loginAPI } from "../../utils/ApiRequest";
+import bg from '../../assets/bg.mp4';
+import "./auth.css";
+import Header from "../../components/Header";
 
 const Login = () => {
   const navigate = useNavigate();
-
+  const videoRef = useRef(null); 
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -45,8 +45,6 @@ const Login = () => {
 
     const { email, password } = values;
 
-    setLoading(true);
-
     const { data } = await axios.post(loginAPI, {
       email,
       password,
@@ -61,31 +59,41 @@ const Login = () => {
       toast.error(data.message, toastOptions);
       setLoading(false);
     }
-  };
-
-  const particlesInit = useCallback(async (engine) => {
-    // console.log(engine);
-    await loadFull(engine);
-  }, []);
-
-  const particlesLoaded = useCallback(async (container) => {
-    // await console.log(container);
-  }, []);
+    };
 
   return (
-    <div style={{ position: "relative", overflow: "hidden" }}>
-      <Container
-        className="mt-5"
-        style={{ position: "relative", zIndex: "2 !important" }}
+    
+    <div style={{ height: "100vh" ,position: "relative", overflow: "hidden" }}>
+      <Header/>
+      <video
+        ref={videoRef}
+        className='videoTag'
+        autoPlay
+        loop
+        muted
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          zIndex: 1,
+        }}
+        onLoadedMetadata={() => {
+          if (videoRef.current) {
+            videoRef.current.playbackRate = 0.5; 
+          }
+        }}
       >
-        <Row>
-          <Col md={{ span: 6, offset: 3 }}>
-            <h1 className="text-center mt-5">
-              <AccountBalanceWalletIcon
-                sx={{ fontSize: 40, color: "white" }}
-                className="text-center"
-              />
-            </h1>
+        <source src={bg} type='video/mp4' />
+      </video>
+      <Container
+        className="mt-5 login-container"
+        style={{ position: "relative", zIndex:2}}
+      >
+        <Row className="login-pg-row">
+          <Col md={{ span: 6, offset: 3 }} className="login-pg">
             <h2 className="text-white text-center ">Login</h2>
             <Form>
               <Form.Group controlId="formBasicEmail" className="mt-3">
@@ -126,10 +134,11 @@ const Login = () => {
                 <Button
                   type="submit"
                   className=" text-center mt-3 btnStyle"
+                  variant="primary"
                   onClick={!loading ? handleSubmit : null}
                   disabled={loading}
                 >
-                  {loading ? "Signin…" : "Login"}
+                  {loading ? "Signing in…" : "Login"}
                 </Button>
 
                 <p className="mt-3" style={{ color: "#9d9494" }}>

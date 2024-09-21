@@ -3,7 +3,7 @@ import { Button, Modal, Form } from "react-bootstrap";
 
 const ModalForm = ({ show, handleClose, handleSubmit, values, handleChange, mode }) => {
   return (
-    <Modal show={show} onHide={handleClose} centered>
+    <Modal show={show} onHide={handleClose} centered backdropClassName="custom-backdrop">
       <Modal.Header closeButton>
       <Modal.Title>{mode === "edit" ? "Edit Transaction" : "Add Transaction"}</Modal.Title>
       </Modal.Header>

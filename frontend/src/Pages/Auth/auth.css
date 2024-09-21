@@ -8,3 +8,24 @@
 .btnStyle:hover{
     background-color: rgb(75, 11, 11);
 }
+.login-container {
+    top: 6vh;
+}
+.register-container{
+    top: -4vh;
+}
+.login-pg-row {
+    display: flex;
+    align-items: center;
+}
+.register-pg-row {
+    display: flex;
+    align-items: center;
+}
+.register-footer{
+    width: 100%; 
+    display: flex;
+    align-items:center;
+    justify-content: center; 
+    flex-direction: column;
+}

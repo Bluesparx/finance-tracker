@@ -1,30 +1,24 @@
-// SignupPage.js
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import "./auth.css";
-import { loadFull } from "tsparticles";
-import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { registerAPI } from "../../utils/ApiRequest";
 import axios from "axios";
+import bg from '../../assets/bg.mp4';
+import Header from "../../components/Header";
 
 const Register = () => {
 
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
+  const videoRef = useRef(null); 
   useEffect(() => {
     if(localStorage.getItem('user')){
       navigate('/');
     }
   }, [navigate]);
-
-  const particlesInit = useCallback(async (engine) => {
-    // console.log(engine);
-    await loadFull(engine);
-  }, []);
 
   const [values, setValues] = useState({
     name : "",
@@ -76,15 +70,36 @@ const Register = () => {
 
   return (
     <>
-    <div style={{ position: 'relative', overflow: 'hidden' }}>
-    
-
-      <Container className="mt-5" style={{position: 'relative', zIndex: "2 !important", color:"white !important"}}>
-      <Row>
-        <h1 className="text-center">
-          <AccountBalanceWalletIcon sx={{ fontSize: 40, color: "white"}}  className="text-center" />
-        </h1>
-        <h1 className="text-center text-white">Welcome to Expense Management System</h1>
+      <div style={{ height: "100vh" ,position: "relative", overflow: "hidden" }}>
+      <Header/>
+      <video
+        ref={videoRef}
+        className='videoTag'
+        autoPlay
+        loop
+        muted
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          zIndex: 1,
+        }}
+        onLoadedMetadata={() => {
+          if (videoRef.current) {
+            videoRef.current.playbackRate = 0.5; 
+          }
+        }}
+      >
+        <source src={bg} type='video/mp4' />
+      </video>
+      <Container
+        className="mt-5 register-container"
+        style={{ position: "relative", zIndex:2}}
+      >
+        <Row className="register-pg-row">
         <Col md={{ span: 6, offset: 3 }}>
           <h2 className="text-white text-center mt-5" >Registration</h2>
           <Form>
@@ -101,7 +116,7 @@ const Register = () => {
               <Form.Label className="text-white">Password</Form.Label>
               <Form.Control type="password"  name="password" placeholder="Password" value={values.password} onChange={handleChange} />
             </Form.Group>
-            <div style={{width: "100%", display: "flex" , alignItems:"center", justifyContent:"center", flexDirection: "column"}} className="mt-4">
+            <div style={{width: "100%", display: "flex" , alignItems:"center", justifyContent:"center", flexDirection: "column"}} className="mt-4 register-footer">
               <Link to="/forgotPassword" className="text-white lnk" >Forgot Password?</Link>
 
               <Button

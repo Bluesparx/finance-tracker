@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Container, Form, Modal, Table } from "react-bootstrap";
+import { Container,  Table } from "react-bootstrap";
 import moment from "moment";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
@@ -11,14 +11,12 @@ import ModalForm from "./ModalForm";
 const TableData = (props) => {
   const [show, setShow] = useState(false);
   const [transactions, setTransactions] = useState([]);
-  // const [loading, setLoading] = useState(false);
   const [editingTransaction, setEditingTransaction] = useState(null);
   const [currId, setCurrId] = useState(null);
   const [refresh, setRefresh] = useState(false);
   const [user, setUser] = useState(null);
 
   const handleEditClick = (itemKey) => {
-    // const buttonId = e.target.id;
     console.log("Clicked button ID:", itemKey);
     if (transactions.length > 0) {
       const editTran = props.data.filter((item) => item._id === itemKey);
@@ -130,8 +128,8 @@ const TableData = (props) => {
 
                     {editingTransaction ? (
                       <>
-                        <div>
-                        <ModalForm 
+                        <div className="edit-modal">
+                        <ModalForm
                           show={show} 
                           handleClose={handleClose} 
                           handleSubmit={handleEditSubmit} 
